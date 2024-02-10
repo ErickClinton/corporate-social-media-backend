@@ -1,9 +1,7 @@
 package com.exampled.corporatesocialmedia.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.exampled.corporatesocialmedia.user.dto.CreateUserDto;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,9 +16,16 @@ public class UsersEntity{
     private String name;
     @NotNull
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotNull
     private String password;
+
+    public void createUser(CreateUserDto user){
+        this.name = user.name();
+        this.email = user.email();
+        this.password = user.password();
+    }
 
 }
