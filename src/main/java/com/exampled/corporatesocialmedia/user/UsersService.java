@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsersService {
@@ -23,11 +24,11 @@ public class UsersService {
         return usersRepository.findAll().stream().map(FindAllUsersDto:: new).toList();
    }
 
-    public UsersEntity findById(Long id){
-        return usersRepository.findById(id).get();
+    public UsersEntity findById(UUID id){
+        return usersRepository.findById(id);
     }
 
-    public void delete(Long id){
+    public void delete(UUID id){
         usersRepository.deleteById(id);
     }
 }
