@@ -1,8 +1,11 @@
 package com.exampled.corporatesocialmedia.user;
-
-import com.exampled.corporatesocialmedia.user.dto.CreateUserDto;
+import com.exampled.corporatesocialmedia.user.dto.FindAllUsersDto;
+import com.exampled.corporatesocialmedia.user.dto.UserDto;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsersService {
@@ -10,16 +13,21 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public Void saveUser(CreateUserDto newUser){
+    public void saveUser(UserDto newUser){
         UsersEntity newUserEntity = new UsersEntity();
-        this.createUser(newUserEntity,newUser);
+        newUserEntity.user(newUser);
         usersRepository.save(newUserEntity);
-        return null;
     }
 
-    private Void createUser(UsersEntity userEntity,CreateUserDto newUser){
-        userEntity.createUser(newUser);
-        return null;
+    public List<FindAllUsersDto> findAll(){
+        return usersRepository.findAll().stream().map(FindAllUsersDto:: new).toList();
+   }
+
+    public UsersEntity findById(Long id){
+        return usersRepository.findById(id).get();
     }
 
+    public void delete(Long id){
+        usersRepository.deleteById(id);
+    }
 }
