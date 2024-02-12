@@ -15,7 +15,7 @@ public class UserController {
     private UsersService usersService;
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
-    @PostMapping("/create-user")
+    @PostMapping("/create")
     public void save(final @RequestBody UserDto newUser){
         usersService.saveUser(newUser);
     }
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
-    @GetMapping("/find-user/{id}")
+    @GetMapping("/find-by-id/{id}")
     public UsersEntity getById(@PathVariable("id") Long id){
         return usersService.findById(id);
     }
