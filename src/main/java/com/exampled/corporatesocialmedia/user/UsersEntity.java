@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity(name="users")
 @Getter
 @Setter
@@ -17,8 +19,8 @@ import lombok.Setter;
 public class UsersEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @NotNull
     private String name;
