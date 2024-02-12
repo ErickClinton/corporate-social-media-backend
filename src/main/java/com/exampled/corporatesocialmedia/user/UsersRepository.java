@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UsersRepository extends JpaRepository<UsersEntity,Long> {
-
     UserDetails findByEmail(String email);
     UsersEntity findById(UUID id);
     void deleteById(UUID id);

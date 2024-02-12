@@ -40,10 +40,10 @@ public class UsersEntity implements UserDetails {
     @NotNull
     private UserRoleEnum role;
 
-    public void user(UserDto user){
+    public void user(UserDto user, String encryptedPassword){
         this.name = user.name();
         this.email = user.email();
-        this.password = user.password();
+        this.password = encryptedPassword;
         this.role = user.role();
     }
 
