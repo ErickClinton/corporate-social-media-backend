@@ -16,8 +16,8 @@ public class UserController {
     private UsersService usersService;
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
-    @PostMapping("/create")
-    public void save(final @RequestBody UserDto newUser){
+    @PostMapping("/register")
+    public void register(final @RequestBody UserDto newUser){
         usersService.saveUser(newUser);
     }
 
