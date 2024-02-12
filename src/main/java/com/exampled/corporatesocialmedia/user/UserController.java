@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("users")
@@ -28,13 +29,13 @@ public class UserController {
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     @GetMapping("/find-by-id/{id}")
-    public UsersEntity getById(@PathVariable("id") Long id){
+    public UsersEntity getById(@PathVariable("id") UUID id){
         return usersService.findById(id);
     }
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") Long id){
+    public void delete(@PathVariable("id") UUID id){
         usersService.delete(id);
     }
 
