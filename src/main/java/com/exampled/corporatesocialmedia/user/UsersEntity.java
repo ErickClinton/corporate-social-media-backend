@@ -40,6 +40,15 @@ public class UsersEntity implements UserDetails {
     @NotNull
     private UserRoleEnum role;
 
+    @NotNull
+    private String contract_type;
+
+    @NotNull
+    private UUID seniority;
+
+    @NotNull
+    private UUID id_squad;
+
     public void user(UserDto user, String encryptedPassword){
         this.name = user.name();
         this.email = user.email();
