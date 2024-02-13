@@ -3,6 +3,7 @@ package com.exampled.corporatesocialmedia.user.controllers;
 import com.exampled.corporatesocialmedia.user.dto.CreateUserDTO;
 import com.exampled.corporatesocialmedia.user.dto.GetUserDTO;
 import com.exampled.corporatesocialmedia.user.useCase.CreateUserUseCase;
+import com.exampled.corporatesocialmedia.user.useCase.DeleteUserUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.GetUserByIdUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.ListAllUsersUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class UserController {
     private ListAllUsersUseCase listAllUsersUseCase;
     @Autowired
     private GetUserByIdUseCase getUserByIdUseCase;
+    @Autowired
+    private DeleteUserUseCase deleteUserUseCase;
     @PostMapping("/register")
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     public ResponseEntity<Object> registerUser(@RequestBody CreateUserDTO createUserDTO){
@@ -41,12 +44,16 @@ public class UserController {
 
     @GetMapping("/find-by-id/{id}")
     @CrossOrigin(origins = "*",allowedHeaders = "*")
-    public ResponseEntity getUserById(@PathVariable UUID id){
+    public ResponseEntity getUserById(@PathVariable("id") UUID id){
         try{
             return ResponseEntity.ok().body(this.getUserByIdUseCase.execute(id));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    // Delete User
+    @CrossOrigin(origins = "*",allowedHeaders = "*")
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable("id") UUID id){
+        this.deleteUserUseCase.execute(id);
+    }
 }
