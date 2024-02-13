@@ -1,14 +1,16 @@
 package com.exampled.corporatesocialmedia.user.controllers;
 
 import com.exampled.corporatesocialmedia.user.dto.CreateUserDTO;
-import com.exampled.corporatesocialmedia.user.dto.FindAllUsersDTO;
+import com.exampled.corporatesocialmedia.user.dto.GetUserDTO;
 import com.exampled.corporatesocialmedia.user.useCase.CreateUserUseCase;
+import com.exampled.corporatesocialmedia.user.useCase.GetUserByIdUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.ListAllUsersUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -18,6 +20,8 @@ public class UserController {
     private CreateUserUseCase createUserUseCase;
     @Autowired
     private ListAllUsersUseCase listAllUsersUseCase;
+    @Autowired
+    private GetUserByIdUseCase getUserByIdUseCase;
     @PostMapping("/register")
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     public ResponseEntity<Object> registerUser(@RequestBody CreateUserDTO createUserDTO){
@@ -31,10 +35,18 @@ public class UserController {
 
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     @GetMapping("/find-all")
-    public List<FindAllUsersDTO> getAll(){
+    public List<GetUserDTO> getAll(){
         return this.listAllUsersUseCase.execute();
     }
-    // List All Users
-    // Get User By ID
+
+    @GetMapping("/find-by-id/{id}")
+    @CrossOrigin(origins = "*",allowedHeaders = "*")
+    public ResponseEntity getUserById(@PathVariable UUID id){
+        try{
+            return ResponseEntity.ok().body(this.getUserByIdUseCase.execute(id));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     // Delete User
 }
