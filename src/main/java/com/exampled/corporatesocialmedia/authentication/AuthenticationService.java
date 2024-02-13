@@ -2,7 +2,7 @@ package com.exampled.corporatesocialmedia.authentication;
 
 import com.exampled.corporatesocialmedia.authentication.dto.AuthenticationDto;
 import com.exampled.corporatesocialmedia.infra.secutiry.TokenService;
-import com.exampled.corporatesocialmedia.user.UsersEntity;
+import com.exampled.corporatesocialmedia.user.entities.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

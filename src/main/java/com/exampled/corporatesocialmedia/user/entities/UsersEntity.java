@@ -1,11 +1,11 @@
-package com.exampled.corporatesocialmedia.user;
+package com.exampled.corporatesocialmedia.user.entities;
 
 import com.exampled.corporatesocialmedia.enums.UserRoleEnum;
-import com.exampled.corporatesocialmedia.user.dto.UserDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,46 +14,38 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name="users")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
+@Builder
+@Entity(name = "users")
 public class UsersEntity implements UserDetails {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    @NotNull
-    private String name;
-
-    @NotNull
-    @Email
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
-
-    @NotNull
+    @Column(nullable = false)
     private String password;
-
-    @NotNull
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
     private UserRoleEnum role;
-
-    @NotNull
+    @Column(nullable = false)
+    private int seniority;
+    @Column(nullable = false)
     private String contract_type;
-
-    @NotNull
-    private UUID seniority;
-
-    @NotNull
+    @Column(nullable = false)
     private UUID id_squad;
 
-    public void user(UserDto user, String encryptedPassword){
-        this.name = user.name();
-        this.email = user.email();
-        this.password = encryptedPassword;
-        this.role = user.role();
+    public UsersEntity(String email, String name, String password, UserRoleEnum role, String contract_type, UUID id_squad, int seniority) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+        this.contract_type = contract_type;
+        this.id_squad = id_squad;
+        this.seniority = seniority;
     }
 
     @Override

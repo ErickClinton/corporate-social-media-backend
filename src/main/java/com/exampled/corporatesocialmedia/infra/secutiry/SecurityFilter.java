@@ -1,6 +1,6 @@
 package com.exampled.corporatesocialmedia.infra.secutiry;
 
-import com.exampled.corporatesocialmedia.user.UsersRepository;
+import com.exampled.corporatesocialmedia.user.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository usersRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
