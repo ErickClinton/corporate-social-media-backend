@@ -1,11 +1,10 @@
 package com.exampled.corporatesocialmedia.infra.secutiry;
 
-import com.exampled.corporatesocialmedia.user.UsersRepository;
+import com.exampled.corporatesocialmedia.user.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +16,13 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private UsersRepository usersRepository;
+    private final TokenService tokenService;
+    private final UserRepository usersRepository;
+
+    public SecurityFilter(final TokenService tokenService, final UserRepository userRepository){
+        this.tokenService = tokenService;
+        this.usersRepository = userRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
