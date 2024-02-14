@@ -14,18 +14,18 @@ public class CreateUserUseCase {
         this.usersRepository = userRepository;
     }
 
-    public void execute(CreateUserDTO dto) throws Exception {
-        if(this.usersRepository.findByEmail(dto.email()) != null) throw new Exception("User already exists");
-        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
-        var user = UsersEntity.builder()
-                .email(dto.email())
+    public void execute(CreateUserDTO user) throws Exception {
+        if(this.usersRepository.findByEmail(user.email()) != null) throw new Exception("User already exists");
+        String encryptedPassword = new BCryptPasswordEncoder().encode(user.password());
+        var newUser = UsersEntity.builder()
+                .email(user.email())
                 .password(encryptedPassword)
-                .name(dto.name())
-                .role(dto.role())
-                .contract_type(dto.contract_type())
-                .id_squad(dto.id_squad())
-                .seniority(dto.seniority())
+                .name(user.name())
+                .role(user.role())
+                .contract_type(user.contract_type())
+                .id_squad(user.id_squad())
+                .seniority(user.seniority())
                 .build();
-        this.usersRepository.save(user);
+        this.usersRepository.save(newUser);
     }
 }
