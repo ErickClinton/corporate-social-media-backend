@@ -8,6 +8,7 @@ import com.exampled.corporatesocialmedia.user.useCase.GetUserByIdUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.ListAllUsersUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.logging.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
 
+    private static final Logger logger = Logger.getLogger(UserController.class.getName());
     private final CreateUserUseCase createUserUseCase;
     private final ListAllUsersUseCase listAllUsersUseCase;
     private final GetUserByIdUseCase getUserByIdUseCase;
