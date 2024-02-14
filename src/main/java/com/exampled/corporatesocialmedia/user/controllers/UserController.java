@@ -6,7 +6,6 @@ import com.exampled.corporatesocialmedia.user.useCase.CreateUserUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.DeleteUserUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.GetUserByIdUseCase;
 import com.exampled.corporatesocialmedia.user.useCase.ListAllUsersUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
