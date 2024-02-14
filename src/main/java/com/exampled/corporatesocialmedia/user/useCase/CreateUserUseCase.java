@@ -3,14 +3,17 @@ package com.exampled.corporatesocialmedia.user.useCase;
 import com.exampled.corporatesocialmedia.user.dto.CreateUserDTO;
 import com.exampled.corporatesocialmedia.user.entities.UsersEntity;
 import com.exampled.corporatesocialmedia.user.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateUserUseCase {
-    @Autowired
-    private UserRepository usersRepository;
+
+    private final UserRepository usersRepository;
+    public CreateUserUseCase(final UserRepository userRepository){
+        this.usersRepository = userRepository;
+    }
+
     public void execute(CreateUserDTO dto) throws Exception {
         if(this.usersRepository.findByEmail(dto.email()) != null) throw new Exception("User already exists");
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
@@ -24,6 +27,5 @@ public class CreateUserUseCase {
                 .seniority(dto.seniority())
                 .build();
         this.usersRepository.save(user);
-        return;
     }
 }

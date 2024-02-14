@@ -17,14 +17,17 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private CreateUserUseCase createUserUseCase;
-    @Autowired
-    private ListAllUsersUseCase listAllUsersUseCase;
-    @Autowired
-    private GetUserByIdUseCase getUserByIdUseCase;
-    @Autowired
-    private DeleteUserUseCase deleteUserUseCase;
+    private final CreateUserUseCase createUserUseCase;
+    private final ListAllUsersUseCase listAllUsersUseCase;
+    private final GetUserByIdUseCase getUserByIdUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
+    public UserController(final CreateUserUseCase createUserUseCase, final ListAllUsersUseCase listAllUsersUseCase, final GetUserByIdUseCase getUserByIdUseCase, final DeleteUserUseCase deleteUserUseCase){
+        this.createUserUseCase = createUserUseCase;
+        this.listAllUsersUseCase = listAllUsersUseCase;
+        this.deleteUserUseCase = deleteUserUseCase;
+        this.getUserByIdUseCase = getUserByIdUseCase;
+    }
+
     @PostMapping("/register")
     @CrossOrigin(origins = "*",allowedHeaders = "*")
     public ResponseEntity<Object> registerUser(@RequestBody CreateUserDTO createUserDTO){
