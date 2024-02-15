@@ -1,10 +1,13 @@
 package com.exampled.corporatesocialmedia.infra.secutiry;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.exampled.corporatesocialmedia.user.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,16 +29,19 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = this.recoveryToken(request);
-        if(token !=null){
-            var email = tokenService.validateToken(token);
-            UserDetails user = usersRepository.findByEmail(email);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        try{
+            var token = this.recoveryToken(request);
+            if(token !=null){
+                var email = tokenService.validateToken(token);
+                UserDetails user = usersRepository.findByEmail(email);
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            filterChain.doFilter(request,response);
+        }catch (JWTVerificationException ex){
+            throw new BadCredentialsException("Token JWT Invalid or expired - Error - "+ ex.getMessage());
         }
 
-        filterChain.doFilter(request,response);
     }
 
     private String recoveryToken(HttpServletRequest request){
