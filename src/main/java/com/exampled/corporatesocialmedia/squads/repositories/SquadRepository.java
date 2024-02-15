@@ -13,4 +13,7 @@ import java.util.UUID;
 public interface SquadRepository extends JpaRepository<SquadsEntity, UUID> {
     @Query("SELECT u FROM users u WHERE u.id_squad = :squadId")
     List<UsersEntity> findIfSquadHasMember(UUID squadId);
+
+    @Query("SELECT s FROM squads s WHERE s.id_office = :id_office")
+    List<SquadsEntity> findByIdOffice(UUID id_office);
 }
